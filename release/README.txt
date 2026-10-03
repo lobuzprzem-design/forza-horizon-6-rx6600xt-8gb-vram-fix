@@ -1,7 +1,7 @@
 Forza Horizon 6 AMD VRAM Reporting Fix v0.3.1-rc1
 =================================================
 
-Experimental release candidate. A fresh test in the game is still required.
+Published as an experimental release candidate without an in-game test.
 The earlier RX 6600 XT test does not establish that this new version works.
 
 Purpose and scope
@@ -131,7 +131,7 @@ with spaces, integrity drift and injected I/O failures. Transaction fixtures
 mock vendor identity; the static PE/refusal checks are tested separately.
 These tests do not execute game DLLs and do not prove malware absence.
 
-This RC requires a fresh real-game test before publication or promotion.
+Stable promotion requires a fresh real-game test of this release candidate.
 Check the proxy diagnostic log, launch stability, the GPU capacity shown by
 the game, and practical behavior on the actual hardware. Keep test evidence.
 

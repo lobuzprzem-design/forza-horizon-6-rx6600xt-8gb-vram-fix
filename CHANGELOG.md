@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.3.1-rc1 — local candidate, game test pending
+## v0.3.1-rc1 — experimental candidate, game test pending
 
 - Replace fixed 8 GB behavior with experimental AMD adapter-specific dedicated-memory reconciliation in AGS.
 - Remove the unsafe D3D12 slot 56 hook, capability spoofing, sleeps and vtable writes.
@@ -10,7 +10,7 @@
 - Add checked backup/restore and package integrity checks; refuse unknown DLL conflicts.
 - Add source regression tests and a complete MSVC/MASM build for all three DLLs.
 
-The new candidate has not been tested in Forza. Publication is deferred until the fresh game test. Other AMD cards are experimental; community reports are requested.
+The new candidate is released experimentally without a Forza test. Other AMD cards are experimental; community reports are requested.
 
 ## v0.3.0-rc1
 

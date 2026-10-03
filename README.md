@@ -2,7 +2,7 @@
 
 Experimental AMD update candidate: `v0.3.1-rc1`.
 
-This update attempts to correct understated VRAM reporting for AMD Radeon cards with different dedicated memory capacities. It replaces the earlier fixed 8 GB approach with the dedicated memory capacity reported by Windows for the matching AMD adapter. The new candidate has not yet been tested in Forza Horizon 6. Publication is pending a test on a fresh installation.
+This update attempts to correct understated VRAM reporting for AMD Radeon cards with different dedicated memory capacities. It replaces the earlier fixed 8 GB approach with the dedicated memory capacity reported by Windows for the matching AMD adapter. This is an experimental public candidate that has not yet been tested in Forza Horizon 6.
 
 ## What changes
 

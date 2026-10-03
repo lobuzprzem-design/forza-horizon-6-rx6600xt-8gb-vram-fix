@@ -13,6 +13,6 @@ Changes:
 - Verify hashes, refuse unknown proxy conflicts, preserve a complete backup manifest and restore the previous state.
 - Include the full source, build script and regression tests.
 
-Status: local candidate; clean Forza test and publication are pending. The previous version's successful RX 6600 XT test does not validate this build. Scan approval is not claimed.
+Status: experimental public candidate, released without a Forza test. The previous version's successful RX 6600 XT test does not validate this build. External scan approval is not claimed.
 
 For each report, provide GPU/VRAM, driver, game/store version, before/after VRAM, whether other mods were absent and the exact error if something fails.

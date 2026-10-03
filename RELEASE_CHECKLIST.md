@@ -13,7 +13,7 @@
 - [x] Source and exact build instructions are prepared locally for Nexus moderators.
 - [ ] User's clean test result is recorded before publication.
 
-Publication is deferred until the clean game test, as requested by the user on 3 October 2026.
+On 3 October 2026, the user explicitly requested immediate experimental publication without an in-game test, replacing the earlier decision to wait. The game-related checks above remain pending and are required for stable promotion.
 
 The completed restore check above is in isolated fixture folders. Restore on the fresh game remains a separate pending check. Antivirus and archive evidence is recorded in the accompanying local VALIDATION.md after packaging; external Nexus/VirusTotal review is still pending.
 
