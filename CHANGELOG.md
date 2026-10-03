@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.3.1-rc1 — local candidate, game test pending
+
+- Replace fixed 8 GB behavior with experimental AMD adapter-specific dedicated-memory reconciliation in AGS.
+- Remove the unsafe D3D12 slot 56 hook, capability spoofing, sleeps and vtable writes.
+- Preserve the Windows memory budget, shared memory and real hardware capabilities.
+- Load genuine original DLLs from controlled paths, preserve proxy exports and report original errors.
+- Verify AGS ABI 6.3.0/6.3.1 and skip ambiguous/non-AMD/APU/unknown cases.
+- Add checked backup/restore and package integrity checks; refuse unknown DLL conflicts.
+- Add source regression tests and a complete MSVC/MASM build for all three DLLs.
+
+The new candidate has not been tested in Forza. Publication is deferred until the fresh game test. Other AMD cards are experimental; community reports are requested.
+
 ## v0.3.0-rc1
 
 Release candidate for the current RX 6600 XT 8 GB test build.

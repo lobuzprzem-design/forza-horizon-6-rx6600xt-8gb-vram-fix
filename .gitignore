@@ -2,3 +2,7 @@
 proxy_build
 .rules
 instructions
+ags_test_build/
+tests/build/
+tests/runtime_ags*/
+tests/installer_fixtures/

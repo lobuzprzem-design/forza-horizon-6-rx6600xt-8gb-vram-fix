@@ -1,15 +1,60 @@
-Uninstall / rollback
-====================
+Forza Horizon 6 AMD VRAM Reporting Fix v0.3.1-rc1
+Uninstall / rollback / recovery
+================================================
 
-1. Close Forza Horizon 6.
-2. Open the folder that contains forzahorizon6.exe.
-3. Delete:
-   - d3d12.dll
-   - dxgi.dll
-4. Restore the original amd_ags_x64.dll from the backup folder created by the
-   installer.
-5. If you installed manually and amd_ags_x64_real.dll is the original game
-   file, copy amd_ags_x64_real.dll back to amd_ags_x64.dll.
+Close Forza Horizon 6 normally before changing any file.
+Keep all backups. Never assume that a differently hashed AGS is original.
 
-If the game does not start after uninstalling, verify that the original
-amd_ags_x64.dll is present next to forzahorizon6.exe.
+Managed v0.3.1-rc1 installation
+------------------------------
+
+Use uninstall_8gb_fix.cmd from the complete extracted v0.3.1-rc1 release, or:
+
+powershell -NoProfile -File ".\uninstall_8gb_fix.ps1" -GameDir "C:\XboxGames\Forza Horizon 6\Content" -NonInteractive
+
+The script reads .forza-amd-vram-fix-state.json and its hash-verified backup
+manifest. Before making any change it validates all managed DLLs and every
+original backup file. It then restores the exact prior bytes/presence of:
+
+- amd_ags_x64.dll
+- d3d12.dll
+- dxgi.dll
+- amd_ags_x64_real.dll
+
+Previously present files are restored, including original DirectX libraries.
+Only managed files that were absent before installation are removed.
+Unrelated files are not removed. Backup directories are never deleted.
+
+If a DLL, manifest or backup was changed/moved/quarantined, the script stops.
+Preserve the state, logs and backups; review the change before retrying.
+Do not remove the state file merely to bypass a failed integrity check.
+
+A partial normal I/O failure triggers rollback to the state before uninstall.
+If that rollback cannot finish, keep all snapshots for recovery.
+An Installing journal left by an interrupted installation is recoverable
+when all DLLs match the recorded prior or installed bytes/presence.
+If the game starts during the operation, close it normally before recovery.
+
+Manual installation or older v0.3.0-rc1
+--------------------------------------
+
+The new scripted uninstaller handles only its own matching managed manifest.
+It cannot infer the original state of an older/manual installation.
+
+1. Locate the backup made BEFORE the proxy was first installed. A later
+   backup may already contain proxy DLLs; do not label it original.
+2. Compare hashes and identify which files existed before that installation.
+3. For each previously present DLL, restore its verified previous copy.
+4. If d3d12.dll or dxgi.dll was previously absent, remove the current file only
+   after confirming it is the proxy installed by that release.
+5. Restore the actual original amd_ags_x64.dll. Use amd_ags_x64_real.dll only
+   after confirming it really is the matching original supported game DLL.
+6. If amd_ags_x64_real.dll was previously absent and was created by that
+   installation, remove it only after verifying the managed copy/backup.
+   If it existed earlier, restore its previous copy instead.
+7. Preserve backups and diagnostic evidence.
+
+If you cannot identify the original libraries or pre-install presence, stop.
+Use the game launcher's supported repair/verification process to recover an
+original installation before attempting another proxy installation.
+Do not blindly delete d3d12.dll/dxgi.dll or overwrite an unknown AGS file.

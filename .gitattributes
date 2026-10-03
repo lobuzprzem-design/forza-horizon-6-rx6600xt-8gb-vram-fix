@@ -1,0 +1,4 @@
+# Preserve the exact release bytes covered by SHA256SUMS.txt.
+release/** -text whitespace=cr-at-eol
+# Pinned SDK hashes refer to unmodified upstream bytes.
+src/vendor/ags/*.h -text -whitespace

@@ -1,40 +1,24 @@
-# Install Guide
+# Install and restore
 
-## Before Installing
+Test the unmodified game first. This candidate should then be tested by itself, with other mods disabled.
 
-Close:
+Extract the complete release folder and read `README.txt`. Close Forza and run `install_8gb_fix.cmd`, or invoke the PowerShell installer with its documented game directory argument. The old installer name is kept for continuity; the candidate is no longer a fixed 8 GB patch.
 
-- Forza Horizon 6
-- Vortex
-- Xbox app
+For an explicit folder:
 
-This prevents Windows from locking the DLL files while they are being replaced.
+```powershell
+powershell -NoProfile -File .\install_8gb_fix.ps1 -GameDir "C:\XboxGames\Forza Horizon 6\Content" -NonInteractive
+powershell -NoProfile -File .\uninstall_8gb_fix.ps1 -GameDir "C:\XboxGames\Forza Horizon 6\Content" -NonInteractive
+```
 
-## Automatic Install
+Use the actual installation directory for your copy of the game. The scripts do not bypass PowerShell execution policy.
 
-1. Extract the release ZIP.
-2. Run `install_8gb_fix.cmd`.
-3. Approve the Windows administrator prompt.
-4. Wait until the installer says it is done.
-5. Start Forza Horizon 6 normally or through Vortex.
+The installer verifies the package, checks the original AMD AGS library and refuses unknown DirectX proxies or an existing managed installation. It preserves the original four DLL paths and creates a manifest with their presence and hashes before applying changes. Keep the backup and state file together.
 
-The installer creates a backup folder in the game directory before copying the new files.
+The backup has a unique `backup-before-forza-amd-vram-fix-v0.3.1-rc1-...` name inside the game directory. `.forza-amd-vram-fix-state.json` points to its manifest and records installation progress. Preserve both if installation is interrupted; the uninstall script can restore a recorded partial installation.
 
-## Manual Install
+For restore, close the game and run `uninstall_8gb_fix.cmd` or its PowerShell equivalent. Restore uses the earlier presence recorded in the manifest: previously existing DLLs are restored, and files added by this installation are removed. Backup folders are kept.
 
-1. Open the folder containing `forzahorizon6.exe`.
-2. Back up existing `amd_ags_x64.dll`, `amd_ags_x64_real.dll`, `d3d12.dll`, and `dxgi.dll` if they exist.
-3. If `amd_ags_x64_real.dll` does not exist, copy the original game `amd_ags_x64.dll` to `amd_ags_x64_real.dll`.
-4. Copy the release versions of `amd_ags_x64.dll`, `d3d12.dll`, and `dxgi.dll` into that folder.
-5. Start the game.
+If another mod or game update has changed an installed file, uninstall stops to avoid overwriting that change. Keep the backup and investigate the conflict.
 
-## Uninstall
-
-Delete these two files from the game folder:
-
-- `d3d12.dll`
-- `dxgi.dll`
-
-Then restore the original `amd_ags_x64.dll` from the backup folder created by the installer.
-
-If you installed manually and `amd_ags_x64_real.dll` is the original game file, copy `amd_ags_x64_real.dll` back to `amd_ags_x64.dll`.
+For a manual installation, first make an external backup of `amd_ags_x64.dll`, `amd_ags_x64_real.dll`, `d3d12.dll` and `dxgi.dll`, and record which paths were absent. Use a genuine AMD AGS original of a supported version. Rename/copy it to `amd_ags_x64_real.dll` before copying the three new proxies. To restore, put back each originally present file and remove only the files that were absent before installation. The automatic uninstaller cannot safely reconstruct a manual installation without its manifest.

@@ -1,58 +1,14 @@
-# Source Changes
+# Source changes in v0.3.1-rc1
 
-This RX 6600 XT variant keeps the original proxy approach and changes the reported memory target to 8 GB.
+The fixed 8 GB behavior from v0.3.0-rc1 has been replaced with an AMD-only reconciliation of AGS local memory against genuine Windows adapter dedicated memory.
 
-## D3D12Proxy.cpp
+D3D12 and DXGI now forward original calls and preserve feature support, requested feature levels, memory budgets and errors. The unsafe ID3D12Device slot 56 write and all vtable modifications were removed.
 
-Changed the D3D12 reported video memory budget constant to:
+AGS uses verified upstream structure layouts, a controlled original-DLL loader and error handling. Matching requires a unique AMD adapter; integrated, zero-memory, ambiguous and unsupported layouts are forwarded without changing reported information. Shared memory is not altered.
 
-```cpp
-static constexpr uint64_t kReportedVideoMemoryBudget = 8ULL * 1024ULL * 1024ULL * 1024ULL;
-```
+Forwarding stubs preserve integer and floating-point argument registers and fail deterministically if an undocumented original export is missing. No original game library is redistributed.
 
-The hook updates the D3D12 video memory info fields:
+The installer/restore scripts verify the package and record the entire earlier DLL state. Original DLL identity and existing mod conflicts are checked before any copy.
 
-```cpp
-memoryInfoFields[0] = kReportedVideoMemoryBudget; // Budget = 8 GB
-memoryInfoFields[3] = kReportedVideoMemoryBudget; // AvailableForReservation = 8 GB
-```
-
-The diagnostic log string was updated to report 8 GB.
-
-## DXGIProxy.cpp
-
-Changed the reported DXGI dedicated video memory constant to:
-
-```cpp
-static constexpr UINT64 kReportedDedicatedVideoMemory = 8ULL * 1024ULL * 1024ULL * 1024ULL;
-```
-
-The adapter hooks update:
-
-- `DXGI_ADAPTER_DESC::DedicatedVideoMemory`
-- `DXGI_ADAPTER_DESC1::DedicatedVideoMemory`
-- `DXGI_ADAPTER_DESC2::DedicatedVideoMemory`
-
-The diagnostic log strings were updated to report 8 GB for `GetDesc`, `GetDesc1`, and `GetDesc2`.
-
-## Build Notes
-
-The release DLLs were built locally with portable Zig / Clang after Visual Studio Build Tools installation was not available in the test environment.
-
-Release DLL hashes:
-
-```text
-3E187DC746566281117091FCC775697EFDAB2CF54D42D6AF78495AE627223ECE  d3d12.dll
-0E40DC448B2C628D913CF7D725B88B5F251CED0A1B0337E6A99D37115F2031D9  dxgi.dll
-```
-
-## Runtime Evidence From Test Machine
-
-The tested RX 6600 XT system produced these useful log lines:
-
-```text
-PatchDeviceInterfaces: QueryVideoMemoryInfo aplicado via probing dinamico
-Patch aplicado: ID3D12Device Spoof de Recursos e VRAM Ativos (lock system ativo)
-SPOOF: GetDesc1 -> 8GB em: AMD Radeon RX 6600 XT
-```
+See BUILD.md for the actual MSVC/MASM build path. Earlier Zig/Clang notes and old source hashes do not describe this candidate. The release SHA256 manifest is the authoritative inventory of files shipped in this version.
 

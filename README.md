@@ -1,125 +1,60 @@
-# Forza Horizon 6 RX 6600 XT 8GB VRAM Fix
+# Forza Horizon 6 AMD VRAM Reporting Fix
 
-Experimental DirectX 12 / DXGI / AMD AGS proxy fix for systems where Forza Horizon 6 detects an AMD Radeon RX 6600 XT 8 GB card as having only about 6 GB of available VRAM.
+Experimental AMD update candidate: `v0.3.1-rc1`.
 
-This release candidate changes the original AMD Universal Fix behavior from a 4 GB spoof to an 8 GB VRAM report and adds an AMD AGS proxy path tested on one RX 6600 XT system.
+This update attempts to correct understated VRAM reporting for AMD Radeon cards with different dedicated memory capacities. It replaces the earlier fixed 8 GB approach with the dedicated memory capacity reported by Windows for the matching AMD adapter. The new candidate has not yet been tested in Forza Horizon 6. Publication is pending a test on a fresh installation.
 
-Current public version: `v0.3.0-rc1`.
+## What changes
 
-## What This Does
+- AMD AGS local memory reporting can be corrected when Windows reports a larger dedicated capacity for one unambiguously matching AMD adapter.
+- AMD AGS 6.3.0 and 6.3.1 are supported. Unknown layouts are forwarded without changing the GPU information.
+- D3D12 and DXGI calls are forwarded to the original Windows libraries.
+- Physical memory, shared memory, the operating system's memory budget and GPU feature support remain the values supplied by the hardware and driver.
+- Missing original libraries and exports produce an error instead of falsely reporting success.
 
-- Places proxy `amd_ags_x64.dll`, `d3d12.dll`, and `dxgi.dll` next to the game executable.
-- Spoofs DXGI adapter memory reporting to 8 GB.
-- Spoofs D3D12 video memory budget / reservation values to 8 GB.
-- Patches AMD AGS GPU memory reporting to 8 GB.
-- Keeps the original compatibility hooks for feature level, shader model, tiled resources, enhanced barriers, and mesh shader tier.
-- Writes diagnostic information to `ForzaFix_iGPU_.log` and `ForzaFix_AGS_8GB.log`.
+The update does not add physical VRAM or enable unsupported graphics features. Integrated adapters with no dedicated memory, ambiguous adapter matches and unsupported AGS versions are left unchanged. Other AMD models remain experimental; successful results on one GPU do not establish compatibility with every AMD card.
 
-This does not include game files and does not modify the game executable.
+## Test first on a clean game
 
-## Tested Setup
+1. Confirm that a fresh Forza installation starts and plays without any mods.
+2. Close the game, extract the candidate and read `release/README.txt`.
+3. Install only this fix, keeping the backup created by the installer.
+4. Compare reported VRAM, startup and gameplay with the clean baseline.
+5. Try other mods individually only after the fix passes the clean test.
 
-Confirmed working on:
+ReShade and other mods using the same DLL names can conflict with this package. The installer refuses unknown DLL replacements rather than overwriting another mod.
 
-- GPU: MSI AMD Radeon RX 6600 XT 8 GB
-- Platform: Xbox / Microsoft Store game install
-- Mod launcher: Vortex
-- Game folder used during test: `C:\XboxGames\Forza Horizon 6\Content`
-- Confirmed log output:
-  - `SPOOF: GetDesc1 -> 8GB em: AMD Radeon RX 6600 XT`
-  - `PatchDeviceInterfaces: QueryVideoMemoryInfo aplicado via probing dinamico`
-  - `AGSProxy: agsInitialize patched 1 device(s) to 8GB localMemoryInBytes`
-  - `Patch aplicado: ID3D12Device Spoof de Recursos e VRAM Ativos`
+## Installation and restore
 
-User-visible result on the tested machine: the game launched through Vortex, reached the map, and graphics quality visibly improved compared with the previous 6 GB detected state.
+See [INSTALL.md](INSTALL.md) and the instructions shipped in `release/`. The installer verifies package hashes before changing files, records the earlier state and creates a backup. The uninstall script checks the installed files and backup before restoring the previous state.
 
-## Download / Release Files
+No automatic administrator elevation or persistent security setting changes are performed. If Windows policy or folder permissions block installation, the script stops with an explanation.
 
-The release package contains:
+## Please report your results
 
-- `d3d12.dll`
-- `dxgi.dll`
-- `amd_ags_x64.dll`
-- `install_8gb_fix.cmd`
-- `install_8gb_fix.ps1`
-- `UNINSTALL.txt`
-- `LICENSE`
-- `README.txt`
+Leave a Nexus comment or open a GitHub issue with:
 
-## Installation
+- AMD GPU model and physical VRAM capacity;
+- graphics driver and game version, and Xbox/Microsoft Store or Steam;
+- VRAM shown before and after installing the update;
+- whether you tested without other mods;
+- whether startup and gameplay work, and any error or crash;
+- relevant lines from `ForzaFix_AMD_VRAM.log`, if created beside the installed DLL.
 
-Recommended method:
+Report successful configurations too. Review any attached logs and remove personal information before posting them.
 
-1. Close Forza Horizon 6.
-2. Close Vortex and Xbox app if they are open.
-3. Extract the release package.
-4. Run `install_8gb_fix.cmd`.
-5. Accept the Windows administrator prompt.
-6. Start the game again.
+## Status and scan history
 
-Manual method:
+The earlier `v0.3.0-rc1` archive was quarantined on Nexus. The linked reports contained detections in its three DLLs. A static review also found an incorrect D3D12 method hook and unsafe failure handling. The new candidate removes that hook and changes the original library loading and installation paths.
 
-1. Close the game.
-2. Open the folder that contains `forzahorizon6.exe`.
-3. Back up any existing `amd_ags_x64.dll`, `amd_ags_x64_real.dll`, `d3d12.dll`, and `dxgi.dll`.
-4. If `amd_ags_x64_real.dll` does not exist, copy the original game `amd_ags_x64.dll` to `amd_ags_x64_real.dll`.
-5. Copy this release's `amd_ags_x64.dll`, `d3d12.dll`, and `dxgi.dll` into that folder.
-6. Start the game.
+This is not a claim that the old detections were false positives or that the new build is antivirus approved. New scan results and the clean game test will be recorded before publication.
 
-## Uninstall / Rollback
+The previous RX 6600 XT 8 GB test belongs to the older candidate and does not validate this update. Online compatibility has not been established.
 
-Delete these files from the game folder:
+## Source and build
 
-- `d3d12.dll`
-- `dxgi.dll`
+See [BUILD.md](BUILD.md). All three DLLs are built locally from the included sources with Microsoft MSVC x64 and the Windows SDK. No game DLL is distributed.
 
-Restore the original `amd_ags_x64.dll` from the installer backup folder. If `amd_ags_x64_real.dll` is the original game file, you can copy it back to `amd_ags_x64.dll`.
+## Credits and license
 
-## How To Verify
-
-After launching the game, check:
-
-```text
-ForzaFix_iGPU_.log
-ForzaFix_AGS_8GB.log
-```
-
-Useful successful lines:
-
-```text
-=== d3d12.dll proxy com Anti-Crash VRAM carregado ===
-=== dxgi.dll proxy carregado ===
-PatchDeviceInterfaces: QueryVideoMemoryInfo aplicado via probing dinamico
-SPOOF: GetDesc1 -> 8GB em: AMD Radeon RX 6600 XT
-SPOOF: IDXGIAdapter3::QueryVideoMemoryInfo LOCAL budget ... -> 8GB
-AGSProxy: agsInitialize patched 1 device(s) to 8GB localMemoryInBytes
-```
-
-If the game starts but still reports 6 GB, attach `ForzaFix_iGPU_.log` and `ForzaFix_AGS_8GB.log` to an issue.
-
-## Known Risks
-
-This is an experimental proxy DLL fix.
-
-Possible issues:
-
-- crash on launch
-- black screen
-- conflict with ReShade, OptiScaler, overlays, or other DLL injectors
-- future game updates replacing or bypassing the proxy behavior
-- anti-cheat / online mode uncertainty
-
-Use at your own risk. Test carefully and keep backups.
-
-## Credits
-
-This work is based on:
-
-- Original project by Joao Lucas / Megadroidgames
-- AMD Universal Fix fork by JuniorD-Isael
-
-This RX 6600 XT 8 GB variant changes the VRAM reporting target to 8 GB and packages the tested build for users affected by the 6 GB detection issue.
-
-## License
-
-MIT License. See `LICENSE`.
+Based on the proxy work by Joao Lucas / Megadroidgames and JuniorD-Isael. AMD AGS declarations retain the upstream AMD license and attribution. See `CREDITS.md`, the vendored SDK license, and `LICENSE`.

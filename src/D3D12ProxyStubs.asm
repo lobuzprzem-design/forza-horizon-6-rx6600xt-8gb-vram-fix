@@ -2,6 +2,7 @@ OPTION CASEMAP:NONE
 
 EXTERN GetOriginalProcByName:PROC
 EXTERN GetOriginalProcByOrdinal:PROC
+EXTERN ProxyMissingD3D12Export:PROC
 
 .data
 name_SetAppCompatStringPointer db "SetAppCompatStringPointer",0
@@ -25,12 +26,19 @@ name_GetBehaviorValue db "GetBehaviorValue",0
 .code
 
 JMP_BY_NAME MACRO procName, nameLabel
-procName PROC
-    sub rsp, 58h
+    LOCAL missingExport
+procName PROC FRAME
+    sub rsp, 88h
+    .allocstack 88h
+    .endprolog
     mov [rsp+20h], rcx
     mov [rsp+28h], rdx
     mov [rsp+30h], r8
     mov [rsp+38h], r9
+    movdqu [rsp+40h], xmm0
+    movdqu [rsp+50h], xmm1
+    movdqu [rsp+60h], xmm2
+    movdqu [rsp+70h], xmm3
     lea rcx, nameLabel
     call GetOriginalProcByName
     mov r10, rax
@@ -38,17 +46,32 @@ procName PROC
     mov rdx, [rsp+28h]
     mov r8,  [rsp+30h]
     mov r9,  [rsp+38h]
-    add rsp, 58h
+    movdqu xmm0, [rsp+40h]
+    movdqu xmm1, [rsp+50h]
+    movdqu xmm2, [rsp+60h]
+    movdqu xmm3, [rsp+70h]
+    test r10, r10
+    jz missingExport
+    add rsp, 88h
     jmp r10
+missingExport:
+    call ProxyMissingD3D12Export
+    int 3
 procName ENDP
 ENDM
 
-D3D12Ordinal99 PROC
-    sub rsp, 58h
+D3D12Ordinal99 PROC FRAME
+    sub rsp, 88h
+    .allocstack 88h
+    .endprolog
     mov [rsp+20h], rcx
     mov [rsp+28h], rdx
     mov [rsp+30h], r8
     mov [rsp+38h], r9
+    movdqu [rsp+40h], xmm0
+    movdqu [rsp+50h], xmm1
+    movdqu [rsp+60h], xmm2
+    movdqu [rsp+70h], xmm3
     mov ecx, 99
     call GetOriginalProcByOrdinal
     mov r10, rax
@@ -56,8 +79,17 @@ D3D12Ordinal99 PROC
     mov rdx, [rsp+28h]
     mov r8,  [rsp+30h]
     mov r9,  [rsp+38h]
-    add rsp, 58h
+    movdqu xmm0, [rsp+40h]
+    movdqu xmm1, [rsp+50h]
+    movdqu xmm2, [rsp+60h]
+    movdqu xmm3, [rsp+70h]
+    test r10, r10
+    jz ordinalMissing
+    add rsp, 88h
     jmp r10
+ordinalMissing:
+    call ProxyMissingD3D12Export
+    int 3
 D3D12Ordinal99 ENDP
 
 JMP_BY_NAME SetAppCompatStringPointer, name_SetAppCompatStringPointer

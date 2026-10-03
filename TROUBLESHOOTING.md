@@ -1,42 +1,14 @@
-# Troubleshooting
+# Reporting and troubleshooting
 
-## The Game Still Shows 6 GB
+If the clean game does not work before installing this fix, resolve that problem first.
 
-Check `ForzaFix_iGPU_.log` in the game folder.
+If startup fails after installing only this candidate, close the game and restore the previous state using the provided uninstaller. Keep the error text and relevant logs. Do not keep stacking mods to diagnose the problem.
 
-If it contains:
+If VRAM remains unchanged, the game may already receive the correct physical capacity, use a different reporting path, or have an unsupported/ambiguous adapter layout. A system-assigned budget below physical VRAM is not automatically a detection error. This candidate preserves that budget.
 
-```text
-SPOOF: GetDesc1 -> 8GB em: AMD Radeon RX 6600 XT
-```
+Other mods using `amd_ags_x64.dll`, `d3d12.dll` or `dxgi.dll` are not established compatible. Test one change at a time and restore between tests.
 
-then the proxy loaded and at least part of the DXGI adapter reporting path was patched.
+For a report, include GPU model, physical VRAM, driver and game versions, store edition, before/after VRAM, clean test result and the exact crash/error. Attach relevant diagnostic text after removing personal paths. A working result is useful too.
 
-If the in-game menu still shows 6 GB, the game may be reading the value from a different path that is not fully covered yet. Open an issue and attach the log.
-
-## The Game Does Not Start
-
-Try this order:
-
-1. Close the game.
-2. Wait 60 seconds.
-3. Start the game again.
-4. If it still fails, temporarily remove other injectors such as ReShade, OptiScaler, overlays, or additional proxy DLLs.
-5. If it still fails, remove `d3d12.dll` and `dxgi.dll` from the game folder.
-
-## Black Screen
-
-Wait up to one minute on the first launch. Shader cache and graphics pipeline setup can take longer after changing proxy DLLs.
-
-If it does not recover, close the game and try once more. If it repeats, uninstall the fix and attach logs to an issue.
-
-## Useful Logs
-
-Attach these when reporting problems:
-
-- `ForzaFix_iGPU_.log`
-- `czt_version_proxy.log`, if present
-- Windows crash event, if Windows created one
-- your GPU model and driver version
-- whether Vortex, OptiScaler, ReShade, or overlays were enabled
+Antivirus quarantine must be investigated by file hash and the actual detection report. Do not disable protection or claim that a detection is harmless merely because the file is a mod. For Nexus quarantine, moderators require the source and build instructions. Keep the blocked version available for their review.
 

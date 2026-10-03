@@ -1,40 +1,40 @@
 LIBRARY amd_ags_x64.dll
 EXPORTS
-    agsCheckDriverVersion=amd_ags_x64_real.agsCheckDriverVersion
-    agsDeInitialize=amd_ags_x64_real.agsDeInitialize
-    agsDriverExtensionsDX11_BeginUAVOverlap=amd_ags_x64_real.agsDriverExtensionsDX11_BeginUAVOverlap
-    agsDriverExtensionsDX11_CreateBuffer=amd_ags_x64_real.agsDriverExtensionsDX11_CreateBuffer
-    agsDriverExtensionsDX11_CreateDevice=amd_ags_x64_real.agsDriverExtensionsDX11_CreateDevice
-    agsDriverExtensionsDX11_CreateTexture1D=amd_ags_x64_real.agsDriverExtensionsDX11_CreateTexture1D
-    agsDriverExtensionsDX11_CreateTexture2D=amd_ags_x64_real.agsDriverExtensionsDX11_CreateTexture2D
-    agsDriverExtensionsDX11_CreateTexture3D=amd_ags_x64_real.agsDriverExtensionsDX11_CreateTexture3D
-    agsDriverExtensionsDX11_DestroyDevice=amd_ags_x64_real.agsDriverExtensionsDX11_DestroyDevice
-    agsDriverExtensionsDX11_EndUAVOverlap=amd_ags_x64_real.agsDriverExtensionsDX11_EndUAVOverlap
-    agsDriverExtensionsDX11_GetMaxClipRects=amd_ags_x64_real.agsDriverExtensionsDX11_GetMaxClipRects
-    agsDriverExtensionsDX11_IASetPrimitiveTopology=amd_ags_x64_real.agsDriverExtensionsDX11_IASetPrimitiveTopology
-    agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect=amd_ags_x64_real.agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect
-    agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirectCountIndirect=amd_ags_x64_real.agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirectCountIndirect
-    agsDriverExtensionsDX11_MultiDrawInstancedIndirect=amd_ags_x64_real.agsDriverExtensionsDX11_MultiDrawInstancedIndirect
-    agsDriverExtensionsDX11_MultiDrawInstancedIndirectCountIndirect=amd_ags_x64_real.agsDriverExtensionsDX11_MultiDrawInstancedIndirectCountIndirect
-    agsDriverExtensionsDX11_NotifyResourceBeginAllAccess=amd_ags_x64_real.agsDriverExtensionsDX11_NotifyResourceBeginAllAccess
-    agsDriverExtensionsDX11_NotifyResourceEndAllAccess=amd_ags_x64_real.agsDriverExtensionsDX11_NotifyResourceEndAllAccess
-    agsDriverExtensionsDX11_NotifyResourceEndWrites=amd_ags_x64_real.agsDriverExtensionsDX11_NotifyResourceEndWrites
-    agsDriverExtensionsDX11_NumPendingAsyncCompileJobs=amd_ags_x64_real.agsDriverExtensionsDX11_NumPendingAsyncCompileJobs
-    agsDriverExtensionsDX11_SetClipRects=amd_ags_x64_real.agsDriverExtensionsDX11_SetClipRects
-    agsDriverExtensionsDX11_SetDepthBounds=amd_ags_x64_real.agsDriverExtensionsDX11_SetDepthBounds
-    agsDriverExtensionsDX11_SetDiskShaderCacheEnabled=amd_ags_x64_real.agsDriverExtensionsDX11_SetDiskShaderCacheEnabled
-    agsDriverExtensionsDX11_SetMaxAsyncCompileThreadCount=amd_ags_x64_real.agsDriverExtensionsDX11_SetMaxAsyncCompileThreadCount
-    agsDriverExtensionsDX11_SetViewBroadcastMasks=amd_ags_x64_real.agsDriverExtensionsDX11_SetViewBroadcastMasks
-    agsDriverExtensionsDX11_WriteBreadcrumb=amd_ags_x64_real.agsDriverExtensionsDX11_WriteBreadcrumb
-    agsDriverExtensionsDX12_CreateDevice=amd_ags_x64_real.agsDriverExtensionsDX12_CreateDevice
-    agsDriverExtensionsDX12_CreateFromDevice=amd_ags_x64_real.agsDriverExtensionsDX12_CreateFromDevice
-    agsDriverExtensionsDX12_Destroy=amd_ags_x64_real.agsDriverExtensionsDX12_Destroy
-    agsDriverExtensionsDX12_DestroyDevice=amd_ags_x64_real.agsDriverExtensionsDX12_DestroyDevice
-    agsDriverExtensionsDX12_PopMarker=amd_ags_x64_real.agsDriverExtensionsDX12_PopMarker
-    agsDriverExtensionsDX12_PushMarker=amd_ags_x64_real.agsDriverExtensionsDX12_PushMarker
-    agsDriverExtensionsDX12_SetMarker=amd_ags_x64_real.agsDriverExtensionsDX12_SetMarker
-    agsGetGPUInfo
-    agsGetVersionNumber=amd_ags_x64_real.agsGetVersionNumber
-    agsInitialize
-    agsSetDisplayMode=amd_ags_x64_real.agsSetDisplayMode
-
+    ForzaFix_AGS_ProxyMarker_v1 @38
+    agsCheckDriverVersion @1
+    agsDeInitialize @2
+    agsDriverExtensionsDX11_BeginUAVOverlap @3
+    agsDriverExtensionsDX11_CreateBuffer @4
+    agsDriverExtensionsDX11_CreateDevice @5
+    agsDriverExtensionsDX11_CreateTexture1D @6
+    agsDriverExtensionsDX11_CreateTexture2D @7
+    agsDriverExtensionsDX11_CreateTexture3D @8
+    agsDriverExtensionsDX11_DestroyDevice @9
+    agsDriverExtensionsDX11_EndUAVOverlap @10
+    agsDriverExtensionsDX11_GetMaxClipRects @11
+    agsDriverExtensionsDX11_IASetPrimitiveTopology @12
+    agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect @13
+    agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirectCountIndirect @14
+    agsDriverExtensionsDX11_MultiDrawInstancedIndirect @15
+    agsDriverExtensionsDX11_MultiDrawInstancedIndirectCountIndirect @16
+    agsDriverExtensionsDX11_NotifyResourceBeginAllAccess @17
+    agsDriverExtensionsDX11_NotifyResourceEndAllAccess @18
+    agsDriverExtensionsDX11_NotifyResourceEndWrites @19
+    agsDriverExtensionsDX11_NumPendingAsyncCompileJobs @20
+    agsDriverExtensionsDX11_SetClipRects @21
+    agsDriverExtensionsDX11_SetDepthBounds @22
+    agsDriverExtensionsDX11_SetDiskShaderCacheEnabled @23
+    agsDriverExtensionsDX11_SetMaxAsyncCompileThreadCount @24
+    agsDriverExtensionsDX11_SetViewBroadcastMasks @25
+    agsDriverExtensionsDX11_WriteBreadcrumb @26
+    agsDriverExtensionsDX12_CreateDevice @27
+    agsDriverExtensionsDX12_CreateFromDevice @28
+    agsDriverExtensionsDX12_Destroy @29
+    agsDriverExtensionsDX12_DestroyDevice @30
+    agsDriverExtensionsDX12_PopMarker @31
+    agsDriverExtensionsDX12_PushMarker @32
+    agsDriverExtensionsDX12_SetMarker @33
+    agsGetGPUInfo @34
+    agsGetVersionNumber @35
+    agsInitialize @36
+    agsSetDisplayMode @37
